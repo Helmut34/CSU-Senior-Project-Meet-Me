@@ -1,0 +1,105 @@
+/* center the login card on the page */
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2em;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3em 2.5em;
+  max-width: 420px;
+  width: 100%;
+}
+
+.back-to-home-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: #6f7577;
+  cursor: pointer;
+  font-size: 0.85em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0;
+  margin-bottom: 1.5em;
+}
+
+.back-to-home-button:hover {
+  color: #8cd1a8;
+}
+
+.login-title {
+  text-align: center;
+}
+
+.subtitle {
+  color: #a8b0b3;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+
+.alert-error {
+  color: #e74c3c;
+  font-size: 0.85em;
+  margin-bottom: 1.5em;
+}
+
+.form-group {
+  margin-bottom: 1.5em;
+}
+
+/* submit button with  template colors */
+.submit-button {
+  background-color: #8cd1a8;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  width: 100%;
+  height: 3em;
+  font-weight: 700;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2em;
+}
+
+.submit-button:hover {
+  background-color: #9ed8b6;
+}
+
+.submit-button:disabled {
+  background-color: #6f7577;
+  opacity: 0.25;
+  cursor: default;
+}
+
+/*swithc signup/login link */
+.toggle-mode {
+  text-align: center;
+  color: #6f7577;
+  font-size: 0.85em;
+  margin-top: 1.5em;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: #8cd1a8;
+  cursor: pointer;
+  font-weight: 700;
+  border-bottom: dotted 1px #8cd1a8;
+  padding: 0;
+}
+
+.toggle-button:hover {
+  border-bottom-color: transparent;
+}

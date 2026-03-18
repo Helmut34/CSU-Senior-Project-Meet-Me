@@ -1,0 +1,221 @@
+
+.party-page {
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.party-header {
+  max-width: 800px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.btn-back-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #6f7577;
+  cursor: pointer;
+}
+
+.btn-back-header:hover {
+  color: #8cd1a8;
+}
+
+.party-content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.party-members-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.member-badge {
+  padding: 6px 12px;
+  background: rgba(144, 144, 144, 0.1);
+  font-size: 0.85em;
+}
+
+.host-badge {
+  background: rgba(140, 209, 168, 0.15);
+  color: #61686b;
+}
+
+.member-badge.accepted {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(140, 209, 168, 0.1);
+}
+
+.member-badge.declined {
+  opacity: 0.5;
+}
+
+.venue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.venue-card {
+  padding: 16px;
+  background: rgba(144, 144, 144, 0.075);
+  border: 1px solid #dddddd;
+  cursor: pointer;
+}
+
+.venue-card:hover {
+  border-color: #8cd1a8;
+}
+
+.venue-card-voted {
+  border-color: #8cd1a8;
+  background: rgba(140, 209, 168, 0.1);
+}
+
+.venue-name {
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vote-count {
+  font-size: 0.8em;
+  font-weight: 400;
+  color: #8cd1a8;
+}
+
+.venue-address {
+  font-size: 0.85em;
+  color: #a8b0b3;
+  margin-top: 4px;
+}
+
+.venue-rating,
+.venue-price {
+  font-size: 0.8em;
+  color: #6f7577;
+}
+
+.party-actions {
+  padding-top: 12px;
+}
+
+.btn-leave-party {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #8cd1a8;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.btn-leave-party:hover {
+  background: #9ed8b6;
+}
+
+.btn-leave-party:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* questionnaire checkboxes to override template*/
+.questionnaire-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+  color: #61686b;
+  font-size: 0.9em;
+}
+
+.questionnaire-checkbox-label input[type="checkbox"] {
+  -webkit-appearance: checkbox;
+  -moz-appearance: checkbox;
+  appearance: checkbox;
+  opacity: 1;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: #8cd1a8;
+  float: none;
+  position: static;
+  z-index: auto;
+}
+
+/* questionnaire option buttons */
+.questionnaire-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.questionnaire-option {
+  padding: 10px 16px;
+  background: rgba(144, 144, 144, 0.075);
+  border: 2px solid #dddddd;
+  color: #61686b;
+  cursor: pointer;
+}
+
+.questionnaire-option:hover {
+  border-color: #8cd1a8;
+}
+
+.questionnaire-option.selected {
+  background-color: #8cd1a8;
+  color: #ffffff;
+  border-color: #7aca9a;
+}
+
+/* travel weight slider override template's weird hidden bug */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #dddddd;
+  border-radius: 3px;
+  outline: none;
+  margin: 16px 0;
+  padding: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #8cd1a8;
+  cursor: pointer;
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #8cd1a8;
+  cursor: pointer;
+  border: none;
+}

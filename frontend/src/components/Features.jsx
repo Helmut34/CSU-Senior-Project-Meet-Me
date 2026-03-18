@@ -1,9 +1,9 @@
-import useScrollReveal from '../hooks/useScrollReveal'
-import useScrollTo from '../hooks/useScrollTo'
+import useScrollReveal from "../hooks/useScrollReveal";
+import useScrollTo from "../hooks/useScrollTo";
 
 export default function Features() {
-  const sectionRef = useScrollReveal('/images/pic02.jpg')
-  const scrollTo = useScrollTo()
+  const sectionRef = useScrollReveal("/images/pic02.jpg");
+  const scrollTo = useScrollTo();
 
   return (
     <section id="features" className="main special" ref={sectionRef}>
@@ -16,7 +16,8 @@ export default function Features() {
             <h2>How It Works</h2>
           </header>
           <p>
-            Four simple steps to a fair meetup spot that works for everyone in your group.
+            Four simple steps to a fair meetup spot that works for everyone in
+            your group.
           </p>
           <ul className="icons-grid">
             <li>
@@ -39,15 +40,15 @@ export default function Features() {
         </div>
         <a
           href="#getstarted"
-          className="goto-next scrolly"
+          className="goto-next"
           onClick={(e) => {
-            e.preventDefault()
-            scrollTo('getstarted')
+            e.preventDefault();
+            scrollTo("getstarted");
           }}
         >
           Next
         </a>
       </div>
     </section>
-  )
+  );
 }
