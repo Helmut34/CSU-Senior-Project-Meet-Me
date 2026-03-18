@@ -1,32 +1,42 @@
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import os
-import logging
 
 db = SQLAlchemy()
 
-# rate limiter 
-limiter = Limiter(key_func=get_remote_address, default_limits=["1000 per day", "200 per hour"])
+# rate limiter
+limiter = Limiter(
+    key_func=get_remote_address, default_limits=["1000 per day", "200 per hour"]
+)
+
 
 def create_app():
-    app = Flask(__name__, static_folder='static')
+    app = Flask(__name__, static_folder="static")
 
     # TODO swap these defaults before deploying
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'secret_key')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///meetme.db')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "secret_key")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
+        "DATABASE_URL", "sqlite:///meetme.db"
+    )
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # flask security config for password hashing using bcrypt
-    app.config['SECURITY_PASSWORD_SALT'] = os.getenv('SECURITY_PASSWORD_SALT', 'password_salt')
-    app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
-    app.config['SECURITY_TOKEN_AUTHENTICATION_KEY'] = 'auth_token'
+    app.config["SECURITY_PASSWORD_SALT"] = os.getenv(
+        "SECURITY_PASSWORD_SALT", "password_salt"
+    )
+    app.config["SECURITY_PASSWORD_HASH"] = "bcrypt"
+    app.config["SECURITY_TOKEN_AUTHENTICATION_KEY"] = "auth_token"
 
     db.init_app(app)
-    CORS(app, origins=os.getenv('CORS_ORIGINS', '*').split(','), supports_credentials=True)
+    CORS(
+        app,
+        origins=os.getenv("CORS_ORIGINS", "*").split(","),
+        supports_credentials=True,
+    )
     limiter.init_app(app)
 
     @app.errorhandler(429)
@@ -35,6 +45,7 @@ def create_app():
 
     # init flask security
     from app.models.models import User
+
     user_datastore = SQLAlchemyUserDatastore(db, User, None)
     security = Security(app, user_datastore)
 

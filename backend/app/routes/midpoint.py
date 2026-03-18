@@ -1,11 +1,11 @@
-from flask import Blueprint, request, jsonify
-from flask_security import auth_required
+from flask import Blueprint
 import math
 
-midpoint_bp = Blueprint('midpoint', __name__)
+midpoint_bp = Blueprint("midpoint", __name__)
+
 
 def calculate_midpoint(coordinates, weights=None):
-#source: https://math.stackexchange.com/questions/4409394/how-to-calculate-the-middlle-coordinate-point-on-earth-between-two-coordinates
+	# source: https://math.stackexchange.com/questions/4409394/how-to-calculate-the-middlle-coordinate-point-on-earth-between-two-coordinates
 
 	count = len(coordinates)
 
@@ -19,8 +19,8 @@ def calculate_midpoint(coordinates, weights=None):
 	x = y = z = 0.0
 
 	for coord, w in zip(coordinates, normalized):
-		lat_rad = math.radians(coord['lat'])
-		lon_rad = math.radians(coord['lon'])
+		lat_rad = math.radians(coord["lat"])
+		lon_rad = math.radians(coord["lon"])
 
 		# project onto unit sphere
 		x += w * math.cos(lat_rad) * math.cos(lon_rad)
@@ -32,8 +32,4 @@ def calculate_midpoint(coordinates, weights=None):
 	hyp = math.sqrt(x * x + y * y)
 	lat = math.atan2(z, hyp)
 
-	return {
-		'lat': math.degrees(lat),
-		'lon': math.degrees(lon),
-		'num_locations': count
-	}
+	return {"lat": math.degrees(lat), "lon": math.degrees(lon), "num_locations": count}
