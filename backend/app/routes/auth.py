@@ -1,11 +1,10 @@
 from flask import Blueprint, request, jsonify
-from flask_security import auth_required, current_user, hash_password
-from flask_security.utils import login_user, logout_user
+from flask_login import login_required, current_user, login_user, logout_user
 from flask import current_app
 from app import db, limiter
 from app.models.models import User
 from app.utils.validation import validate_email, validate_username, validate_password
-import uuid
+import bcrypt
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/api/auth")
 
@@ -52,8 +51,7 @@ def register():
 		new_user = User(
 			email=email,
 			username=username,
-			password=hash_password(password),
-			fs_uniquifier=str(uuid.uuid4()),
+			password=bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8"),
 		)
 
 		db.session.add(new_user)
@@ -98,7 +96,7 @@ def login():
 	found_user = User.query.filter_by(email=email).first()
 
 	# dont tell them which field was wrong for security
-	if not found_user or not found_user.verify_and_update_password(password):
+	if not found_user or not bcrypt.checkpw(password.encode("utf-8"), found_user.password.encode("utf-8")):
 		return jsonify({"error": "Invalid email or password"}), 401
 
 	login_user(found_user)
@@ -116,14 +114,14 @@ def login():
 
 
 @auth_bp.route("/logout", methods=["POST"])
-@auth_required()
+@login_required
 def logout():
 	logout_user()
 	return jsonify({"message": "Logout Successful"}), 200
 
 
 @auth_bp.route("/me", methods=["GET"])
-@auth_required()
+@login_required
 def get_current_user():
 	return jsonify(
 		{

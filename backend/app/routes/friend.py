@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_security import auth_required, current_user
+from flask_login import login_required, current_user
 from app import db
 from app.models.models import User, Friends, FriendStatus
 
@@ -7,7 +7,7 @@ friend_bp = Blueprint("friend", __name__, url_prefix="/api/friends")
 
 
 @friend_bp.route("/add", methods=["POST"])
-@auth_required()
+@login_required
 def add_friend():
 	data = request.get_json()
 	friend_email = data.get("friend_email")
@@ -42,7 +42,7 @@ def add_friend():
 
 
 @friend_bp.route("/accept", methods=["POST"])
-@auth_required()
+@login_required
 def accept_friend():
 	data = request.get_json()
 	req_id = data.get("request_id")
@@ -63,7 +63,7 @@ def accept_friend():
 
 
 @friend_bp.route("/decline", methods=["POST"])
-@auth_required()
+@login_required
 def decline_friend():
 	data = request.get_json()
 	req_id = data.get("request_id")
@@ -83,7 +83,7 @@ def decline_friend():
 
 
 @friend_bp.route("/", methods=["GET"])
-@auth_required()
+@login_required
 def get_friends():
 	# get all accepted friendships where the current user is on either side
 	accepted = Friends.query.filter(
@@ -108,7 +108,7 @@ def get_friends():
 
 
 @friend_bp.route("/requests", methods=["GET"])
-@auth_required()
+@login_required
 def get_pending_requests():
 	pending = Friends.query.filter_by(
 		friend_id=current_user.id, status=FriendStatus.pending

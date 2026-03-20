@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_security import auth_required
+from flask_login import login_required
 from flask import current_app
 from app import limiter
 import googlemaps
@@ -10,7 +10,7 @@ venues_bp = Blueprint("venues", __name__, url_prefix="/api/venues")
 
 # searches google places near a location
 @venues_bp.route("/search", methods=["POST"])
-@auth_required()
+@login_required
 @limiter.limit("30 per minute")
 def search_venues():
 	data = request.get_json()

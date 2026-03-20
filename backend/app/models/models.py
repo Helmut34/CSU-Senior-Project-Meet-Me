@@ -1,6 +1,6 @@
 import enum
 from app import db
-from flask_security import UserMixin
+from flask_login import UserMixin
 
 
 class FriendStatus(enum.Enum):
@@ -23,7 +23,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(25), unique=True, nullable=True, index=True)
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean(), default=True)
-    fs_uniquifier = db.Column(db.String(255), unique=True, nullable=False)
 
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)

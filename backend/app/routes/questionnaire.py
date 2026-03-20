@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_security import auth_required, current_user
+from flask_login import login_required, current_user
 from app import db
 from app.models.models import Party, PartyInvite, PartyQuestionnaire
 
@@ -18,7 +18,7 @@ def check_party_access(party, user_id, require_accepted=True):
 
 
 @questionare_bp.route("/api/parties/<int:party_id>/questionnaire", methods=["POST"])
-@auth_required()
+@login_required
 def submit_questionnaire(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -87,7 +87,7 @@ def submit_questionnaire(party_id):
 
 
 @questionare_bp.route("/api/parties/<int:party_id>/questionnaire", methods=["GET"])
-@auth_required()
+@login_required
 def get_questionnaire(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -118,7 +118,7 @@ def get_questionnaire(party_id):
 
 
 @questionare_bp.route("/api/parties/<int:party_id>/questionnaires/all", methods=["GET"])
-@auth_required()
+@login_required
 def get_all_questionnaires(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -148,7 +148,7 @@ def get_all_questionnaires(party_id):
 
 
 @questionare_bp.route("/api/parties/<int:party_id>/matched-venues", methods=["GET"])
-@auth_required()
+@login_required
 def get_matched_venues(party_id):
 	party = Party.query.get(party_id)
 	if not party:

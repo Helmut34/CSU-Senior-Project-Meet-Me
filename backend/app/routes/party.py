@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_security import auth_required, current_user
+from flask_login import login_required, current_user
 from app.models.models import (
 	db,
 	User,
@@ -29,7 +29,7 @@ def is_party_member(party, user_id):
 
 
 @party_bp.route("/api/party/create", methods=["POST"])
-@auth_required()
+@login_required
 def create_party():
 	data = request.get_json()
 	friends_ids = data.get("friends_ids", [])
@@ -62,7 +62,7 @@ def create_party():
 
 
 @party_bp.route("/api/parties/invites", methods=["GET"])
-@auth_required()
+@login_required
 def get_pending_invites():
 	invites = PartyInvite.query.filter_by(
 		invitee_user_id=current_user.id, status="pending"
@@ -106,7 +106,7 @@ def get_pending_invites():
 
 
 @party_bp.route("/api/parties/invites/<int:invite_id>/accept", methods=["POST"])
-@auth_required()
+@login_required
 def accept_invite(invite_id):
 	invite = PartyInvite.query.get(invite_id)
 
@@ -122,7 +122,7 @@ def accept_invite(invite_id):
 
 
 @party_bp.route("/api/parties/invites/<int:invite_id>/reject", methods=["POST"])
-@auth_required()
+@login_required
 def reject_invite(invite_id):
 	invite = PartyInvite.query.get(invite_id)
 
@@ -138,7 +138,7 @@ def reject_invite(invite_id):
 
 
 @party_bp.route("/api/parties/<int:party_id>", methods=["GET"])
-@auth_required()
+@login_required
 def get_party(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -194,7 +194,7 @@ def get_party(party_id):
 
 
 @party_bp.route("/api/parties/active", methods=["GET"])
-@auth_required()
+@login_required
 def get_active_party():
 	# check if they're hosting anything first, then check invites
 	hosted = Party.query.filter_by(host_user_id=current_user.id).first()
@@ -240,7 +240,7 @@ def get_active_party():
 
 
 @party_bp.route("/api/parties/leave", methods=["POST"])
-@auth_required()
+@login_required
 def leave_party():
 	data = request.get_json()
 	party_id = data.get("party_id")
@@ -273,7 +273,7 @@ def leave_party():
 
 
 @party_bp.route("/api/parties/<int:party_id>/midpoint", methods=["GET"])
-@auth_required()
+@login_required
 def get_party_midpoint(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -356,7 +356,7 @@ def get_party_midpoint(party_id):
 
 
 @party_bp.route("/api/parties/<int:party_id>/weight", methods=["PUT"])
-@auth_required()
+@login_required
 def update_party_weight(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -396,7 +396,7 @@ def update_party_weight(party_id):
 
 
 @party_bp.route("/api/parties/<int:party_id>/weight", methods=["GET"])
-@auth_required()
+@login_required
 def get_party_weight(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -423,7 +423,7 @@ def get_party_weight(party_id):
 
 
 @party_bp.route("/api/parties/<int:party_id>/vote", methods=["POST"])
-@auth_required()
+@login_required
 def vote_for_venue(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -436,7 +436,7 @@ def vote_for_venue(party_id):
 	if not data or not data.get("venue_place_id") or not data.get("venue_name"):
 		return jsonify({"error": "venue_place_id and venue_name required"}), 400
 
-	# check if they already voted - if so just update it
+	# note; remove make frontend only, did not implement fucntionality
 	existing_vote = VenueVote.query.filter_by(
 		party_id=party_id, user_id=current_user.id
 	).first()
@@ -461,7 +461,7 @@ def vote_for_venue(party_id):
 
 
 @party_bp.route("/api/parties/<int:party_id>/votes", methods=["GET"])
-@auth_required()
+@login_required
 def get_votes(party_id):
 	party = Party.query.get(party_id)
 	if not party:
@@ -500,7 +500,7 @@ def get_votes(party_id):
 
 
 @party_bp.route("/api/parties/<int:party_id>/finalize", methods=["POST"])
-@auth_required()
+@login_required
 def finalize_venue(party_id):
 	party = Party.query.get(party_id)
 	if not party:

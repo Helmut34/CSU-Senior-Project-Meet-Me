@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_security import auth_required, current_user
+from flask_login import login_required, current_user
 from app import db
 
 location_bp = Blueprint("location", __name__)
@@ -7,7 +7,7 @@ location_bp = Blueprint("location", __name__)
 
 # saves the users current location so we can use it for midpoint calculations later
 @location_bp.route("/api/location/save", methods=["POST"])
-@auth_required()
+@login_required
 def save_location():
 	data = request.get_json()
 
