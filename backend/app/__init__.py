@@ -1,1 +1,1 @@
-from app.config import db, limiter, create_app
+from app.config import db, limiter, cache, create_app

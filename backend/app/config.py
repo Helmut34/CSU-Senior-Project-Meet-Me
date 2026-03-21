@@ -4,14 +4,18 @@ from flask_login import LoginManager
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_caching import Cache
 import os
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+cache = Cache()
 
-#rate limiter (remember to update b4 prod)
+# rate limiter — Redis backend so limits are shared across Gunicorn workers
 limiter = Limiter(
-    key_func=get_remote_address, default_limits=["1000 per day", "200 per hour"]
+    key_func=get_remote_address,
+    default_limits=["1000 per day", "200 per hour"],
+    storage_uri=os.getenv("REDIS_URL", "memory://"),
 )
 
 def create_app():
@@ -24,8 +28,16 @@ def create_app():
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+    # Redis cache
+    redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+    app.config["CACHE_TYPE"] = "RedisCache"
+    app.config["CACHE_REDIS_URL"] = redis_url
+    app.config["CACHE_DEFAULT_TIMEOUT"] = 300
+    app.config["CACHE_KEY_PREFIX"] = "meetme:"
+
     db.init_app(app)
     login_manager.init_app(app)
+    cache.init_app(app)
     CORS(
         app,
         origins=os.getenv("CORS_ORIGINS", "*").split(","),
