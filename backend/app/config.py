@@ -18,6 +18,7 @@ limiter = Limiter(
     storage_uri=os.getenv("REDIS_URL", "memory://"),
 )
 
+
 def create_app():
     app = Flask(__name__, static_folder="static")
 
@@ -45,10 +46,11 @@ def create_app():
     )
     limiter.init_app(app)
 
-#internal functions for login manager and error handling
+    # internal functions for login manager and error handling
     @login_manager.user_loader
     def load_user(user_id):
         from app.models.models import User
+
         return User.query.get(int(user_id))
 
     @login_manager.unauthorized_handler

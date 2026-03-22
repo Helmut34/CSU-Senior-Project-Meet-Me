@@ -5,4 +5,4 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
-	return {"status": "running"}
+    return {"status": "running"}

@@ -7,7 +7,6 @@ export default function useScrollReveal(bgImageSrc) {
     const section = sectionRef.current;
     if (!section || !bgImageSrc) return;
 
-    // create the background div like the original template does
     const bgDiv = document.createElement("div");
     bgDiv.className = "main-bg";
     bgDiv.id = section.id + "-bg";

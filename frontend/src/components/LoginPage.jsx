@@ -4,7 +4,7 @@ import { Mail, Lock, User, AlertCircle, ArrowLeft } from "lucide-react";
 import { authAPI } from "./services/api";
 import "./css/LoginPage.css";
 
-// regex from https://stackoverflow.com/a/46181 
+// regex from https://stackoverflow.com/a/46181
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const USERNAME_RE = /^[a-zA-Z0-9_]{3,20}$/;
 const MIN_PW_LEN = 8;
@@ -20,6 +20,7 @@ const LoginPage = ({ onLogin }) => {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
+    //TODO: Doesnt work??
     // landing page "Get Started" link passes mode=signup via router state
     if (location.state?.mode === "signup") {
       setReturningUser(false);
@@ -41,7 +42,10 @@ const LoginPage = ({ onLogin }) => {
     setFormError("");
 
     const problem = validateFields();
-    if (problem) { setFormError(problem); return; }
+    if (problem) {
+      setFormError(problem);
+      return;
+    }
 
     setBusy(true);
     try {
@@ -128,15 +132,13 @@ const LoginPage = ({ onLogin }) => {
           </div>
 
           <button type="submit" className="submit-button" disabled={busy}>
-            {busy
-              ? "Hang on..."
-              : returningUser
-                ? "Sign In"
-                : "Create Account"}
+            {busy ? "Hang on..." : returningUser ? "Sign In" : "Create Account"}
           </button>
 
           <div className="toggle-mode">
-            {returningUser ? "Don't have an account? " : "Already have an account? "}
+            {returningUser
+              ? "Don't have an account? "
+              : "Already have an account? "}
             <button
               type="button"
               onClick={() => {
