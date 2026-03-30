@@ -28,7 +28,7 @@ def is_party_member(party, user_id):
     return invite is not None
 
 
-@party_bp.route("/api/party/create", methods=["POST"])
+@party_bp.route("/api/parties/create", methods=["POST"])
 @login_required
 def create_party():
     data = request.get_json()

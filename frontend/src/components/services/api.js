@@ -111,7 +111,7 @@ export const friendAPI = {
 
 export const partyAPI = {
   async createParty(friends_ids) {
-    const res = await fetch("/api/party/create", {
+    const res = await fetch("/api/parties/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
