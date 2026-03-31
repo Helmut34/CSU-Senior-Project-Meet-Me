@@ -1,7 +1,7 @@
 services:
   redis:
     image: redis:7-alpine
-    restart: unless-stopped
+    restart: always
 
   backend:
     build: ./backend
@@ -9,16 +9,16 @@ services:
     environment:
       - FLASK_ENV=production
       - REDIS_URL=redis://redis:6379/0
-    ports:
-      - "5000:5000"
+    expose:
+      - "5000"
     depends_on:
       - redis
-    restart: unless-stopped
+    restart: always
 
   frontend:
     build: ./frontend
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - backend
-    restart: unless-stopped
+    restart: always
